@@ -1,0 +1,597 @@
+<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 550px;
+    }
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .container {
+  display: flex;
+    flex-direction: row;
+}
+  </style>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+#myInput {
+  box-sizing: border-box;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+#myInput:focus {outline: 3px solid #ddd;}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown a:hover {background-color: #ddd;}
+.show {display: block;}
+</style>
+</head>
+<body>
+  <!--<div id="myDropdown1" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="myInput1" onkeyup="filterFunction1()">
+    <a href="#paris">Paris</a>
+    <a href="#toronto">Toronto</a>
+    <a href="#los angeles">Los Angeles</a>
+    <a href="#havana">Havana</a>
+    <a href="#anchorage">Anchorage</a>
+    <a href="#louisville">Louisville</a>
+    <a href="#chek lap kok">Chek Lap Kok</a>
+    <a href="#memphis">Memphis</a>
+    <a href="#pudong">Pudong</a>
+    <a href="#incheon">Incheon</a>
+    <a href="#dubai">Dubai</a>
+    <a href="#dayuan">Dayuan</a>
+    <a href="#narita">Narita</a>
+    <a href="#doha">Doha</a>
+    <a href="#changi">Changi</a>
+    <a href="#frankfurt">Frankfurt</a>
+    <a href="#chaoyang-shunyi">Chaoyang-Shunyi</a>
+    <a href="#hillingdon">Hillingdon</a>
+    <a href="#haarlemmermeer">Haarlemmermeer</a>
+    <a href="#seine-et-marne">Seine-et-Marne</a>
+  </div>
+  <div id="myDropdown2" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction2()">
+    <a href="#paris">Paris</a>
+    <a href="#toronto">Toronto</a>
+    <a href="#los angeles">Los Angeles</a>
+    <a href="#havana">Havana</a>
+    <a href="#anchorage">Anchorage</a>
+    <a href="#louisville">Louisville</a>
+    <a href="#chek lap kok">Chek Lap Kok</a>
+    <a href="#memphis">Memphis</a>
+    <a href="#pudong">Pudong</a>
+    <a href="#incheon">Incheon</a>
+    <a href="#dubai">Dubai</a>
+    <a href="#dayuan">Dayuan</a>
+    <a href="#narita">Narita</a>
+    <a href="#doha">Doha</a>
+    <a href="#changi">Changi</a>
+    <a href="#frankfurt">Frankfurt</a>
+    <a href="#chaoyang-shunyi">Chaoyang-Shunyi</a>
+    <a href="#hillingdon">Hillingdon</a>
+    <a href="#haarlemmermeer">Haarlemmermeer</a>
+    <a href="#seine-et-marne">Seine-et-Marne</a>
+    </div>
+  <div id="myDropdown3" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="myInput3" onkeyup="filterFunction3()">
+    <a href="#salalah">Salalah</a>
+    <a href="#hai phong">Hai Phong</a>
+    <a href="#mudra">Mudra</a>
+    <a href="#bremen">Bremen</a>
+    <a href="#laem chabang">Laem Chabang</a>
+    <a href="#shanghai">Shanghai</a>
+    <a href="#singapore">Singapore</a>
+    <a href="#busan">Busan</a>
+    <a href="#rotterdam">Rotterdam</a>
+    <a href="#jebelali">Jebel Ali</a>
+    <a href="#port klang">Port Klang</a>
+    <a href="#antwerp">Antwerp</a>
+    <a href="#los angeles">Los Angeles</a>
+    <a href="#hamburg">Hamburg</a>
+    <a href="#jakarta">Jakarta</a>
+    <a href="#colombo">Colombo</a>
+    <a href="#piraeus">Piraeus</a>
+    <a href="#valencia">Valencia</a>
+    <a href="#manila">manila</a>
+    <a href="#jawaharlal nehru port">Jawaharlal Nehru Port</a>
+  </div>
+  <div id="myDropdown4" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="myInput4" onkeyup="filterFunction4()">
+    <a href="#salalah">Salalah</a>
+    <a href="#hai phong">Hai Phong</a>
+    <a href="#mudra">Mudra</a>
+    <a href="#bremen">Bremen</a>
+    <a href="#laem chabang">Laem Chabang</a>
+    <a href="#shanghai">Shanghai</a>
+    <a href="#singapore">Singapore</a>
+    <a href="#busan">Busan</a>
+    <a href="#rotterdam">Rotterdam</a>
+    <a href="#jebelali">Jebel Ali</a>
+    <a href="#port klang">Port Klang</a>
+    <a href="#antwerp">Antwerp</a>
+    <a href="#los angeles">Los Angeles</a>
+    <a href="#hamburg">Hamburg</a>
+    <a href="#jakarta">Jakarta</a>
+    <a href="#colombo">Colombo</a>
+    <a href="#piraeus">Piraeus</a>
+    <a href="#valencia">Valencia</a>
+    <a href="#manila">manila</a>
+    <a href="#jawaharlal nehru port">Jawaharlal Nehru Port</a>
+  </div>
+</div>-->
+<form>
+  Starting Airport:
+  <select id="mySelect1">
+    <option value="paris">Paris</a>
+    <option value="toronto">Toronto</a>
+    <option value="los angeles">Los Angeles</a>
+    <option value="havana">Havana</a>
+    <option value="anchorage">Anchorage</a>
+    <option value="louisville">Louisville</a>
+    <option value="chek lap kok">Chek Lap Kok</a>
+    <option value="memphis">Memphis</a>
+    <option value="pudong">Pudong</a>
+    <option value="incheon">Incheon</a>
+    <option value="dubai">Dubai</a>
+    <option value="dayuan">Dayuan</a>
+    <option value="narita">Narita</a>
+    <option value="doha">Doha</a>
+    <option value="changi">Changi</a>
+    <option value="frankfurt">Frankfurt</a>
+    <option value="chaoyang-shunyi">Chaoyang-Shunyi</a>
+    <option value="hillingdon">Hillingdon</a>
+    <option value="haarlemmermeer">Haarlemmermeer</a>
+    <option value="seine-et-marne">Seine-et-Marne</a>
+  </select>
+</form>
+<form>
+  Ending Airport:
+  <select id="mySelect2">
+    <option value="paris">Paris</a>
+    <option value="toronto">Toronto</a>
+    <option value="los angeles">Los Angeles</a>
+    <option value="havana">Havana</a>
+    <option value="anchorage">Anchorage</a>
+    <option value="louisville">Louisville</a>
+    <option value="chek lap kok">Chek Lap Kok</a>
+    <option value="memphis">Memphis</a>
+    <option value="pudong">Pudong</a>
+    <option value="incheon">Incheon</a>
+    <option value="dubai">Dubai</a>
+    <option value="dayuan">Dayuan</a>
+    <option value="narita">Narita</a>
+    <option value="doha">Doha</a>
+    <option value="changi">Changi</a>
+    <option value="frankfurt">Frankfurt</a>
+    <option value="chaoyang-shunyi">Chaoyang-Shunyi</a>
+    <option value="hillingdon">Hillingdon</a>
+    <option value="haarlemmermeer">Haarlemmermeer</a>
+    <option value="seine-et-marne">Seine-et-Marne</a>
+  </select>
+</form>
+
+<button type="button" onclick="myFunction()">Go!</button>
+<script>
+function myFunction() {
+  var startingair = document.getElementById("mySelect1").value;
+  var endingair = document.getElementById("mySelect2").value;
+  var lineDataItem = lineSeries.pushDataItem({
+          pointsToConnect: [, narita]
+      });
+
+      var grinding = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+      var hooho = am5.Graphics.new(root, {
+          svgPath:
+              "m2,106h28l24,30h72l-44,-133h35l80,132h98c21,0 21,34 0,34l-98,0 -80,134h-35l43,-133h-71l-24,30h-28l15,-47",
+          scale: 0.06,
+          centerY: am5.p50,
+          centerX: am5.p50,
+          fill: am5.color(0xC0C0C0)
+      });
+
+      grinding.bullets.push(function () {
+          var containit = am5.Container.new(root, {});
+          containit.children.push(hoho);
+          return am5.Bullet.new(root, { sprite: container });
+      });
+
+      var planeDataItem = breme.pushDataItem({
+          lineDataItem: lineDataItem,
+          positionOnLine: 0,
+          autoRotate: true
+      });
+      planeDataItem.animate({
+          key: "positionOnLine",
+          to: 1,
+          duration: 10000,
+          loops: Infinity,
+          easing: am5.ease.yoyo(am5.ease.linear)
+      });
+
+      planeDataItem.on("positionOnLine", function (value) {
+          if (value >= 0.99) {
+              hehe.set("rotation", 180);
+          } else if (value <= 0.01) {
+              hehe.set("rotation", 0);
+          }
+      });
+}
+</script>
+<script>
+let airport1 = "pudong";
+let airport2 = "havana";
+let shipport1 = "antwerp";
+let shipport2 = "la2";
+
+function myFunction1() {
+  document.getElementById("myDropdown1").classList.toggle("show");
+}
+function myFunction2() {
+  document.getElementById("myDropdown2").classList.toggle("show");
+}
+function myFunction3() {
+  document.getElementById("myDropdown3").classList.toggle("show");
+}
+function myFunction4() {
+  document.getElementById("myDropdown4").classList.toggle("show");
+}
+/*
+function filterFunction1() {
+  var input, ul, li;
+  input = document.getElementById("myInput1");
+  div = document.getElementById("myDropdown1");
+  airport1 = input;
+  console.log("airport1: " + airport1);
+}
+*/
+function filterFunction1() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput1");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown1");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+  airport1 = input;
+  console.dir("airport1: " + airport1);
+} 
+
+function filterFunction2() {
+  var input, ul, li;
+  input = document.getElementById("myInput2");
+  div = document.getElementById("myDropdown2");
+  airport2 = input;
+}
+function filterFunction3() {
+  var input, ul, li;
+  input = document.getElementById("myInput3");
+  div = document.getElementById("myDropdown3");
+  shipport1 = input;
+}
+function filterFunction4() {
+  var input, ul, li;
+  input = document.getElementById("myInput4");
+  div = document.getElementById("myDropdown4");
+  shipport2 = input;
+}
+</script>
+</body>
+</html>
+<!-- HTML -->
+<div id="chartdiv"></div>
+<!-- Chart code -->
+<script>
+  am5.ready(function () {
+
+      var root = am5.Root.new("chartdiv");
+
+      root.setThemes([
+          am5themes_Animated.new(root)
+      ]);
+
+      var chart = root.container.children.push(am5map.MapChart.new(root, {
+          panX: "rotateX",
+          panY: "translateY",
+          projection: am5map.geoMercator(),
+          homeGeoPoint: { latitude: 2, longitude: 2 }
+      }));
+
+      var cont = chart.children.push(am5.Container.new(root, {
+          layout: root.horizontalLayout,
+          x: 20,
+          y: 40
+      }));
+
+      cont.children.push(am5.Label.new(root, {
+          centerY: am5.p50,
+          text: "Map"
+      }));
+
+      var switchButton = cont.children.push(am5.Button.new(root, {
+          themeTags: ["switch"],
+          centerY: am5.p50,
+          icon: am5.Circle.new(root, {
+              themeTags: ["icon"]
+          })
+      }));
+
+      switchButton.on("active", function () {
+          if (!switchButton.get("active")) {
+              chart.set("projection", am5map.geoMercator());
+              chart.set("panY", "translateY");
+              chart.set("rotationY", 0);
+              backgroundSeries.mapPolygons.template.set("fillOpacity", 0);
+          } else {
+              chart.set("projection", am5map.geoOrthographic());
+              chart.set("panY", "rotateY")
+
+              backgroundSeries.mapPolygons.template.set("fillOpacity", 0.1);
+          }
+      });
+
+      cont.children.push(
+          am5.Label.new(root, {
+              centerY: am5.p50,
+              text: "Globe"
+          })
+      );
+
+      var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+      backgroundSeries.mapPolygons.template.setAll({
+          fill: root.interfaceColors.get("alternativeBackground"),
+          fillOpacity: 0,
+          strokeOpacity: 0
+      });
+
+      backgroundSeries.data.push({
+          geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+      });
+
+      var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+          geoJSON: am5geodata_worldLow
+      }));
+
+      var lineSeries = chart.series.push(am5map.MapLineSeries.new(root, {}));
+      lineSeries.mapLines.template.setAll({
+          stroke: root.interfaceColors.get("alternativeBackground"),
+          strokeOpacity: 0.3
+      });
+      
+      var airpointSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+      airpointSeries.bullets.push(function () {
+          var circle = am5.Circle.new(root, {
+              radius: 6,
+              tooltipText: "Airport!",
+              cursorOverStyle: "pointer",
+              tooltipY: 0,
+              fill: am5.color(0xFF0000),
+              stroke: root.interfaceColors.get("background"),
+              strokeWidth: 2,
+              draggable: false
+          });
+          return am5.Bullet.new(root, {
+              sprite: circle
+          });
+      });
+
+      var shippointSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+      shippointSeries.bullets.push(function () {
+          var circle = am5.Circle.new(root, {
+              radius: 6,
+              tooltipText: "Shipping Port!",
+              cursorOverStyle: "pointer",
+              tooltipY: 0,
+              fill: am5.color(0x028A0F),
+              stroke: root.interfaceColors.get("background"),
+              strokeWidth: 2,
+              draggable: false
+          });
+          return am5.Bullet.new(root, {
+              sprite: circle
+          });
+      });
+
+
+      var paris = addAirport({ latitude: 48.8567, longitude: 2.351 }, "Paris");
+      var toronto = addAirport({ latitude: 43.8163, longitude: -79.4287 }, "Toronto");
+      var la = addAirport({ latitude: 34.3, longitude: -118.15 }, "Los Angeles");
+      var havana = addAirport({ latitude: 23, longitude: -82 }, "Havana");
+      var anchorage = addAirport({latitude: 61.2181, longitude: -149.9}, "Anchorage");
+      var louisville = addAirport({latitude: 38.2527, longitude: -85.7585}, "Louisville");
+      var chekLapKok = addAirport({latitude: 22.3084, longitude: 113.924}, "Chek Lap Kok");
+      var memphis = addAirport({latitude: 35.1495, longitude: -90.049}, "Memphis");
+      var pudong = addAirport({latitude: 31.2211, longitude: 31.2211}, "Pudong");
+      var incheon = addAirport({latitude: 37.4563, longitude: 126.705}, "Incheon");
+      var dubai = addAirport({latitude: 25.2048, longitude: 55.2708}, "Dubai");
+      var dayuan = addAirport({latitude: 25.0493, longitude: 121.194}, "Dayuan");
+      var narita = addAirport({latitude: 35.7767, longitude: 140.319}, "Narita");
+      var doha = addAirport({latitude: 25.2854, longitude: 51.531}, "Doha");
+      var changi = addAirport({latitude: 1.345, longitude: 103.983}, "Changi");
+      var frankfurt = addAirport({latitude: 50.1109, longitude: 8.6821}, "Frankfurt");
+      var seine_et_marne = addAirport({latitude: 48.8411, longitude: 2.9994}, "Seine-et-Marne");
+      var chaoyang_shunyi = addAirport({latitude: 39.8674, longitude: 116.488}, "Chaoyang-Shunyi");
+      var hillingdon = addAirport({latitude: 51.5352, longitude: -0.4481}, "Hillingdon");
+      var haarlemmermeer = addAirport({latitude: 52.3004, longitude: 4.6744}, "Haarlemmermeer");
+
+      var shanghai = addShippingPort({latitude: 31.2304, longitude: 121.474}, "Shanghai");
+      var singapore = addShippingPort({latitude: 1.264, longitude: 103.84}, "Singapore");
+      var busan = addShippingPort({latitude: 35.1743, longitude: 129.072}, "Busan");
+      var rotterdam = addShippingPort({latitude: 51.885, longitude: 4.2867}, "Rotterdam");
+      var jebelAli = addShippingPort({latitude: 25.0113, longitude: 55.0612}, "JebelAli");
+      var shangPortKlanghai = addShippingPort({latitude: 3, longitude: 101.4}, "PortKlang");
+      var antwerp = addShippingPort({latitude: 51.2211, longitude: 4.39971}, "Antwerp");
+      var la2 = addShippingPort({latitude: 33.7425, longitude: -118.261}, "LosAngeles");
+      var hamburg = addShippingPort({latitude: 53.4697, longitude: 9.98468}, "Hamburg");
+      var jakarta = addShippingPort({latitude: -6.17511, longitude: 106.865}, "Jakarta");
+      var colombo = addShippingPort({latitude: 6.9404, longitude: 79.8464}, "Colombo");
+      var piraeus = addShippingPort({latitude: 37.9406, longitude: 23.6333}, "Piraeus");
+      var valenica = addShippingPort({latitude: 39.4481, longitude: 0.3169}, "Valenica");
+      var manila = addShippingPort({latitude: 14.5833, longitude: 120.95}, "Manila");
+      var jawaharlalNehruPort = addShippingPort({latitude: 18.9499, longitude: 72.9512}, "Jawaharlal Nehru Port");
+      var salalah = addShippingPort({latitude: 16.9415, longitude: 53.9954}, "Salalah");
+      var haiPhong = addShippingPort({latitude: 20.85, longitude: 106.683}, "Hai Phong");
+      var mundra = addShippingPort({latitude: 22.8396, longitude: 69.7241}, "Mundra");
+      var bremen = addShippingPort({latitude: 53.0758, longitude: 8.80716}, "Bremen");
+      var laemChabang = addShippingPort({latitude: 13.0971, longitude: 100.915}, "Laem Chabang");
+
+      var lineDataItem = lineSeries.pushDataItem({
+          pointsToConnect: [la, frankfurt]
+      });
+
+      var planeSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+      var plane = am5.Graphics.new(root, {
+          svgPath:
+          "M232.54 67.154l-17.08 5.692L241.513 151h18.976zM71.28 106.707l-14.56 10.586L71 136.928V230h18v-68.322L161.234 261h22.258zM272 117v18h39v16h18v-16h39v-18zm-23 52v126h108.943l-5.111-46H279v-80zm48 0v62h53.834l-6.889-62zM89 279v16h110v-16zm-70.012 34l41.248 110h319.68l114.25-110H140.588C157.022 318.35 169 333.85 169 352c0 22.537-18.463 41-41 41s-41-18.463-41-41c0-18.15 11.978-33.65 28.412-39zM128 329c-12.81 0-23 10.19-23 23s10.19 23 23 23 23-10.19 23-23-10.19-23-23-23zm208 0h80v18h-80zM96 439c-28.777 2.338-51.11 8.201-78.61 16.387l5.22 17.226C45.822 467.213 71.59 457.287 96 457c23.665 0 49.275 16 80 16s56.335-16 80-16 49.275 16 80 16 56.335-16 80-16c27.734 2.18 46.87 7.726 73.39 15.613l5.22-17.226C468.536 448.762 443.471 439.273 416 439c-30.725 0-56.335 16-80 16s-49.275-16-80-16-56.335 16-80 16-49.275-16-80-16z",
+          scale: 0.06,
+          centerY: am5.p50,
+          centerX: am5.p50,
+          fill: am5.color(0xC0C0C0)
+      });
+
+      planeSeries.bullets.push(function () {
+          var container = am5.Container.new(root, {});
+          container.children.push(plane);
+          return am5.Bullet.new(root, { sprite: container });
+      });
+
+      var planeDataItem = planeSeries.pushDataItem({
+          lineDataItem: lineDataItem,
+          positionOnLine: 0,
+          autoRotate: true
+      });
+      planeDataItem.animate({
+          key: "positionOnLine",
+          to: 1,
+          duration: 10000,
+          loops: Infinity,
+          easing: am5.ease.yoyo(am5.ease.linear)
+      });
+
+      planeDataItem.on("positionOnLine", function (value) {
+          if (value >= 0.99) {
+              plane.set("rotation", 180);
+          } else if (value <= 0.01) {
+              plane.set("rotation", 0);
+          }
+      });
+
+      var lineDataItem = lineSeries.pushDataItem({
+          pointsToConnect: [antwerp, la2]
+      });
+
+      var breme = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+      var hehe = am5.Graphics.new(root, {
+          svgPath:
+              "m2,106h28l24,30h72l-44,-133h35l80,132h98c21,0 21,34 0,34l-98,0 -80,134h-35l43,-133h-71l-24,30h-28l15,-47",
+          scale: 0.06,
+          centerY: am5.p50,
+          centerX: am5.p50,
+          fill: am5.color(0xC0C0C0)
+      });
+
+      breme.bullets.push(function () {
+          var container = am5.Container.new(root, {});
+          container.children.push(hehe);
+          return am5.Bullet.new(root, { sprite: container });
+      });
+
+      var planeDataItem = breme.pushDataItem({
+          lineDataItem: lineDataItem,
+          positionOnLine: 0,
+          autoRotate: true
+      });
+      planeDataItem.animate({
+          key: "positionOnLine",
+          to: 1,
+          duration: 10000,
+          loops: Infinity,
+          easing: am5.ease.yoyo(am5.ease.linear)
+      });
+
+      planeDataItem.on("positionOnLine", function (value) {
+          if (value >= 0.99) {
+              hehe.set("rotation", 180);
+          } else if (value <= 0.01) {
+              hehe.set("rotation", 0);
+          }
+      });
+
+      function addAirport(coords, title) {
+          return airpointSeries.pushDataItem({
+              latitude: coords.latitude,
+              longitude: coords.longitude
+          });
+      }
+
+      function addShippingPort(coords, title) {
+          return shippointSeries.pushDataItem({
+              latitude: coords.latitude,
+              longitude: coords.longitude
+          });
+      }
+
+      chart.appear(1000, 100);
+
+  });
+</script>
