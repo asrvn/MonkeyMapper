@@ -1,0 +1,310 @@
+<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 550px;
+    }
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+<!-- Chart code -->
+<script>
+    am5.ready(function () {
+
+        var root = am5.Root.new("chartdiv");
+
+        root.setThemes([
+            am5themes_Animated.new(root)
+        ]);
+
+        var chart = root.container.children.push(am5map.MapChart.new(root, {
+            panX: "rotateX",
+            panY: "translateY",
+            projection: am5map.geoMercator(),
+            homeGeoPoint: { latitude: 2, longitude: 2 }
+        }));
+
+        var cont = chart.children.push(am5.Container.new(root, {
+            layout: root.horizontalLayout,
+            x: 20,
+            y: 40
+        }));
+
+        cont.children.push(am5.Label.new(root, {
+            centerY: am5.p50,
+            text: "Map"
+        }));
+
+        var switchButton = cont.children.push(am5.Button.new(root, {
+            themeTags: ["switch"],
+            centerY: am5.p50,
+            icon: am5.Circle.new(root, {
+                themeTags: ["icon"]
+            })
+        }));
+
+        switchButton.on("active", function () {
+            if (!switchButton.get("active")) {
+                chart.set("projection", am5map.geoMercator());
+                chart.set("panY", "translateY");
+                chart.set("rotationY", 0);
+                backgroundSeries.mapPolygons.template.set("fillOpacity", 0);
+            } else {
+                chart.set("projection", am5map.geoOrthographic());
+                chart.set("panY", "rotateY")
+
+                backgroundSeries.mapPolygons.template.set("fillOpacity", 0.1);
+            }
+        });
+
+        cont.children.push(
+            am5.Label.new(root, {
+                centerY: am5.p50,
+                text: "Globe"
+            })
+        );
+
+        var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+        backgroundSeries.mapPolygons.template.setAll({
+            fill: root.interfaceColors.get("alternativeBackground"),
+            fillOpacity: 0,
+            strokeOpacity: 0
+        });
+
+        backgroundSeries.data.push({
+            geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+        });
+
+        var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+            geoJSON: am5geodata_worldLow
+        }));
+
+        var lineSeries = chart.series.push(am5map.MapLineSeries.new(root, {}));
+        lineSeries.mapLines.template.setAll({
+            stroke: root.interfaceColors.get("alternativeBackground"),
+            strokeOpacity: 0.3
+        });
+        
+        var airpointSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+        airpointSeries.bullets.push(function () {
+            var circle = am5.Circle.new(root, {
+                radius: 10,
+                tooltipText: "Airport!",
+                cursorOverStyle: "pointer",
+                tooltipY: 0,
+                fill: am5.color(0xFF0000),
+                stroke: root.interfaceColors.get("background"),
+                strokeWidth: 2,
+                draggable: false
+            });
+            return am5.Bullet.new(root, {
+                sprite: circle
+            });
+        });
+
+        var shippointSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+        shippointSeries.bullets.push(function () {
+            var circle = am5.Circle.new(root, {
+                radius: 10,
+                tooltipText: "Shipping Port!",
+                cursorOverStyle: "pointer",
+                tooltipY: 0,
+                fill: am5.color(0x028A0F),
+                stroke: root.interfaceColors.get("background"),
+                strokeWidth: 2,
+                draggable: false
+            });
+            return am5.Bullet.new(root, {
+                sprite: circle
+            });
+        });
+
+
+        var paris = addAirport({ latitude: 48.8567, longitude: 2.351 }, "Paris");
+        var toronto = addAirport({ latitude: 43.8163, longitude: -79.4287 }, "Toronto");
+        var la = addAirport({ latitude: 34.3, longitude: -118.15 }, "Los Angeles");
+        var havana = addAirport({ latitude: 23, longitude: -82 }, "Havana");
+        var anchorage = addAirport({latitude: 61.2181, longitude: -149.9}, "Anchorage");
+        var louisville = addAirport({latitude: 38.2527, longitude: -85.7585}, "Louisville");
+        var chekLapKok = addAirport({latitude: 22.3084, longitude: 113.924}, "Chek Lap Kok");
+        var memphis = addAirport({latitude: 35.1495, longitude: -90.049}, "Memphis");
+        var pudong = addAirport({latitude: 31.2211, longitude: 31.2211}, "Pudong");
+        var incheon = addAirport({latitude: 37.4563, longitude: 126.705}, "Incheon");
+        var dubai = addAirport({latitude: 25.2048, longitude: 55.2708}, "Dubai");
+        var dayuan = addAirport({latitude: 25.0493, longitude: 121.194}, "Dayuan");
+        var narita = addAirport({latitude: 35.7767, longitude: 140.319}, "Narita");
+        var doha = addAirport({latitude: 25.2854, longitude: 51.531}, "Doha");
+        var changi = addAirport({latitude: 1.345, longitude: 103.983}, "Changi");
+        var frankfurt = addAirport({latitude: 50.1109, longitude: 8.6821}, "Frankfurt");
+        var seine_et_marne = addAirport({latitude: 48.8411, longitude: 2.9994}, "Seine-et-Marne");
+        var chaoyang_shunyi = addAirport({latitude: 39.8674, longitude: 116.488}, "Chaoyang-Shunyi");
+        var hillingdon = addAirport({latitude: 51.5352, longitude: -0.4481}, "Hillingdon");
+        var haarlemmermeer = addAirport({latitude: 52.3004, longitude: 4.6744}, "Haarlemmermeer");
+
+        var shanghai = addShippingPort({latitude: 31.2304, longitude: 121.474}, "Shanghai")
+        var singapore = addShippingPort({latitude: 1.264, longitude: 103.84}, "Singapore")
+        var busan = addShippingPort({latitude: 35.1743, longitude: 129.072}, "Busan")
+        var rotterdam = addShippingPort({latitude: 51.885, longitude: 4.2867}, "Rotterdam")
+        var jebelAli = addShippingPort({latitude: 25.0113, longitude: 55.0612}, "JebelAli")
+        var shangPortKlanghai = addShippingPort({latitude: 3, longitude: 101.4}, "PortKlang")
+        var antwerp = addShippingPort({latitude: 51.2211, longitude: 4.39971}, "Antwerp")
+        var la2 = addShippingPort({latitude: 33.7425, longitude: -118.261}, "LosAngeles")
+        var hamburg = addShippingPort({latitude: 53.4697, longitude: 9.98468}, "Hamburg")
+        var jakarta = addShippingPort({latitude: -6.17511, longitude: 106.865}, "Jakarta")
+        var colombo = addShippingPort({latitude: 6.9404, longitude: 79.8464}, "Colombo")
+        var piraeus = addShippingPort({latitude: 37.9406, longitude: 23.6333}, "Piraeus")
+        var valenica = addShippingPort({latitude: 39.4481, longitude: 0.3169}, "Valenica")
+        var manila = addShippingPort({latitude: 14.5833, longitude: 120.95}, "Manila")
+        var jawaharlalNehruPort = addShippingPort({latitude: 18.9499, longitude: 72.9512}, "JawaharlalNehruPort")
+        var salalah = addShippingPort({latitude: 16.9415, longitude: 53.9954}, "Salalah")
+        var haiPhong = addShippingPort({latitude: 20.85, longitude: 106.683}, "HaiPhong")
+        var mundra = addShippingPort({latitude: 22.8396, longitude: 69.7241}, "Mundra")
+        var bremen = addShippingPort({latitude: 53.0758, longitude: 8.80716}, "Bremen")
+        var laemChabang = addShippingPort({latitude: 13.0971, longitude: 100.915}, "LaemChabang")
+
+        var lineDataItem = lineSeries.pushDataItem({
+            pointsToConnect: [la, havana]
+        });
+
+        var planeSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+        var plane = am5.Graphics.new(root, {
+            svgPath:
+                "m2,106h28l24,30h72l-44,-133h35l80,132h98c21,0 21,34 0,34l-98,0 -80,134h-35l43,-133h-71l-24,30h-28l15,-47",
+            scale: 0.06,
+            centerY: am5.p50,
+            centerX: am5.p50,
+            fill: am5.color(0xC0C0C0)
+        });
+
+        planeSeries.bullets.push(function () {
+            var container = am5.Container.new(root, {});
+            container.children.push(plane);
+            return am5.Bullet.new(root, { sprite: container });
+        });
+
+        var planeDataItem = planeSeries.pushDataItem({
+            lineDataItem: lineDataItem,
+            positionOnLine: 0,
+            autoRotate: true
+        });
+        planeDataItem.animate({
+            key: "positionOnLine",
+            to: 1,
+            duration: 10000,
+            loops: Infinity,
+            easing: am5.ease.yoyo(am5.ease.linear)
+        });
+
+        planeDataItem.on("positionOnLine", function (value) {
+            if (value >= 0.99) {
+                plane.set("rotation", 180);
+            } else if (value <= 0.01) {
+                plane.set("rotation", 0);
+            }
+        });
+
+        var lineDataItem = lineSeries.pushDataItem({
+            pointsToConnect: [hillingdon, pudong]
+        });
+
+        var breme = chart.series.push(am5map.MapPointSeries.new(root, {}));
+
+        var hehe = am5.Graphics.new(root, {
+            svgPath:
+                "m2,106h28l24,30h72l-44,-133h35l80,132h98c21,0 21,34 0,34l-98,0 -80,134h-35l43,-133h-71l-24,30h-28l15,-47",
+            scale: 0.06,
+            centerY: am5.p50,
+            centerX: am5.p50,
+            fill: am5.color(0xC0C0C0)
+        });
+
+        breme.bullets.push(function () {
+            var container = am5.Container.new(root, {});
+            container.children.push(hehe);
+            return am5.Bullet.new(root, { sprite: container });
+        });
+
+        var planeDataItem = breme.pushDataItem({
+            lineDataItem: lineDataItem,
+            positionOnLine: 0,
+            autoRotate: true
+        });
+        planeDataItem.animate({
+            key: "positionOnLine",
+            to: 1,
+            duration: 10000,
+            loops: Infinity,
+            easing: am5.ease.yoyo(am5.ease.linear)
+        });
+
+        planeDataItem.on("positionOnLine", function (value) {
+            if (value >= 0.99) {
+                hehe.set("rotation", 180);
+            } else if (value <= 0.01) {
+                hehe.set("rotation", 0);
+            }
+        });
+
+        function addAirport(coords, title) {
+            return airpointSeries.pushDataItem({
+                latitude: coords.latitude,
+                longitude: coords.longitude
+            });
+        }
+
+        function addShippingPort(coords, title) {
+            return shippointSeries.pushDataItem({
+                latitude: coords.latitude,
+                longitude: coords.longitude
+            });
+        }
+
+        chart.appear(1000, 100);
+
+    });
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .container {
+  display: flex;
+    flex-direction: row;
+}
+  </style>
+</head>
+<body>
+    <h2>Airport</h2>
+    <div class="container">
+    <div id="right">Destination Airport:<input type="text" id="textbox1" name="endairplace"></div>
+    <div id="left">Starting Airport:<input type="string" id="textbox2" name="startairplace"></div>
+    <button type="button" onclick="getInputValue1();">Enter for Airport!</button>
+    </div>
+    <h2>Shipping Port</h2>
+    <div class="container">
+    <div id="right">Destination Shipping Port:<input type="string" id="textbox3" name="endshipplace"></div>
+    <div id="left">Starting Shipping Port:<input type="string" id="textbox4" name="startshipplace"></div>
+    <button type="button" onclick="getInputValue2();">Enter for Ship Port!</button>
+    </div>
+    <script>
+        function getInputValue1(){
+            var inputVal1 = document.getElementById("textbox1").value;
+            var inputVal2 = document.getElementById("textbox2").value;
+            alert(inputVal1 + inputVal2)};
+        function getInputValue2(){
+            var inputVal3 = document.getElementById("textbox3").value;
+            var inputVal4 = document.getElementById("textbox4").value;
+            alert(inputVal3 + inputVal4)};
+    </script>
+</body>
+</html>
+<!-- HTML -->
+<div id="chartdiv"></div>
